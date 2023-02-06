@@ -1,0 +1,14 @@
+django
+djangorestframework
+djangorestframework-simplejwt
+django-celery-results
+django-filter
+django-cors-headers
+django-allauth
+drf-yasg
+drf-api-logger
+psycopg2-binary
+python-decouple
+celery
+pillow
+pytelegrambotapi
