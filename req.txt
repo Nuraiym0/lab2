@@ -12,3 +12,5 @@ python-decouple
 celery
 pillow
 pytelegrambotapi
+
+redis

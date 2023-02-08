@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 
-from .serializers import RegisterUserSerializer, CreateNewPasswordSerializer, UserSerializer
-from .models import User
+from .serializers import RegisterUserSerializer, CreateNewPasswordSerializer, UserSerializer#, ProfileSerializer
+from .models import User#, Profile
 
 
 class RegisterUserView(APIView):
@@ -41,6 +41,11 @@ class UserRetrieveView(RetrieveAPIView):
     serializer_class=UserSerializer
 
 
+# class ProfileListView(RetrieveAPIView):
+#     queryset=Profile.objects.all()
+#     serializer_class=ProfileSerializer
+
+
 @api_view(['GET'])
 def activate_view(request, activation_code):
     user = get_object_or_404(User, activation_code=activation_code)
@@ -50,7 +55,7 @@ def activate_view(request, activation_code):
     return Response('Successfuly activated the account', 200)
 
 def send_activation_code(email, activation_code):
-    activation_url = f'http://35.185.69.40/account/forgot-password-complete/{activation_code}/'
+    activation_url = f'http://127.0.0.1:8000/account/forgot-password-complete/{activation_code}/'
     message = f"""Чтобы восстановить пароль, пройдите по данной ссылке: {activation_url}"""
     send_mail('Восстановление пароля', message, 'admin@admin.com',recipient_list=[email],)
 

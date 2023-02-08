@@ -8,7 +8,7 @@ from enum import Enum
 
 from .tasks import send_activation_code
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class UserManager(BaseUserManager):
@@ -43,9 +43,19 @@ class MentorTypeEnum(Enum):
     c = 'онлайн'
     d = 'другое'
 
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+
+
 class MentorExperienceEnum(Enum):
     yes = 'да'
     no = 'нет'
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+
 
 
 class MentorAudienceEnum(Enum):
@@ -53,20 +63,20 @@ class MentorAudienceEnum(Enum):
     b = 'у меня маленькая аудитория'
     c = 'у меня достаточная аудитория'
 
-   
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
 
+
+   
+# choices=TransactionType.choices()
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=8)
-    # type = models.ForeignKey(MentorTypeEnum, related_name='type', on_delete=models.CASCADE, default="")
-    # experience = models.ForeignKey(MentorExperienceEnum, related_name='experience', on_delete=models.CASCADE, default="")
-    # audience = models.ForeignKey(MentorAudienceEnum, related_name='audience', on_delete=models.CASCADE, default="")
-                #  choices=[(tag, tag.value) for tag in BlogStatus]
-    type = models.CharField(max_length=50, choices=[(tag, tag.value) for tag in MentorTypeEnum]) 
-    experience = models.CharField(max_length=50, choices=[(tag, tag.value) for tag in MentorExperienceEnum]) 
-    audience = models.CharField(max_length=50, choices=[(tag, tag.value) for tag in MentorAudienceEnum]) 
-    is_mentor = models.BooleanField()
+    type = models.CharField(max_length=50, choices=MentorTypeEnum.choices()) 
+    experience = models.CharField(max_length=50, choices=MentorExperienceEnum.choices()) 
+    audience = models.CharField(max_length=50, choices=MentorAudienceEnum.choices()) 
+    is_mentor = models.BooleanField(default=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=70)
 
@@ -86,20 +96,25 @@ class User(AbstractUser):
 
 
 
-# class Profile(AbstractUser):
+# class Profile(models.Model):
 #     user_id = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE, default="")
-#     competence = models.CharField()
-#     language = models.CharField()
+#     competence = models.CharField(max_length=255)
+#     language = models.CharField(max_length=255)
 #     site_url = models.TextField()
 #     twitter_url = models.TextField(verbose_name='Twitter')
 #     facebook_url = models.TextField(verbose_name='Facebook')
 #     linkedin_url = models.TextField()
 #     youtube_url = models.TextField(verbose_name='Youtube')
 #     image = models.ImageField(upload_to='media', null=True, blank=True, default="")
-#     is_hidden = models.BooleanField()
-#     is_hidden_course = models.BooleanField()
-#     promotions = models.BooleanField()
-#     mentor_ads = models.BooleanField()
-#     email_ads = models.BooleanField()
+#     is_hidden = models.BooleanField(default=False)
+#     is_hidden_course = models.BooleanField(default=False)
+#     promotions = models.BooleanField(default=False)
+#     mentor_ads = models.BooleanField(default=False)
+#     email_ads = models.BooleanField(default=True)
+
+
+#     class Meta:
+#         verbose_name = "Профиль"
+#         verbose_name_plural = "Профили"
 
 
