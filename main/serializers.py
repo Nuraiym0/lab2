@@ -6,7 +6,11 @@ from .models import Profile, Archive, Order, Category, Course, CourseItem, Cours
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=Profile
-        fields= ['__all__']
+        fields= ['language', 'image']
+
+    # def to_representation(self, instance):
+    #     return super().to_representation(instance)
+
 
 
 class ArchiveSerializer(serializers.ModelSerializer):

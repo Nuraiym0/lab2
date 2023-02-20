@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from rest_framework.response import Response
 
-from .views import RegisterAPIView
+from .views import RegisterUserView
 from .models import User
 
 
@@ -25,7 +25,7 @@ class AuthTest(TestCase):
             'password_confirm':'12345678'
         }
         request = self.factory.post('/account/register/', data, format='json')
-        view = RegisterAPIView.as_view()
+        view = RegisterUserView.as_view()
         response = view(request)
         
         assert response.status_code == 201
